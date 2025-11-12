@@ -83,36 +83,74 @@ const StructureView = ({ data, globalClasses, activeIndex, showNodeClass }) => {
     return null;
   }
 
+  // Build tree structure from Elementor elements
   const elementsById = data.reduce((acc, el) => {
     acc[el.id] = { ...el, children: [] };
     return acc;
   }, {});
 
+  // For Elementor format, all elements are at root level
+  // We need to build hierarchy based on elements array
   const roots = [];
   data.forEach(el => {
-    if (el.parent && elementsById[el.parent]) {
-      elementsById[el.parent].children.push(elementsById[el.id]);
-    } else {
+    // If element has elements array, populate children
+    if (el.elements && Array.isArray(el.elements)) {
+      el.elements.forEach(childId => {
+        if (elementsById[childId]) {
+          elementsById[el.id].children.push(elementsById[childId]);
+        }
+      });
+    }
+    // Add to roots if it's not referenced as a child anywhere
+    const isChild = data.some(parent => 
+      parent.elements && Array.isArray(parent.elements) && parent.elements.includes(el.id)
+    );
+    if (!isChild) {
       roots.push(elementsById[el.id]);
     }
   });
 
   const getElementInfo = (element) => {
+    // Determine element type from Elementor structure
+    let label = 'Element';
+    let iconKey = 'default';
+
+    if (element.widgetType) {
+      // Widget element
+      const widgetMap = {
+        'e-button': { label: 'Button', icon: 'button' },
+        'e-heading': { label: 'Heading', icon: 'heading' },
+        'e-paragraph': { label: 'Paragraph', icon: 'p' },
+        'e-image': { label: 'Image', icon: 'image' },
+        'e-divider': { label: 'Divider', icon: 'div' },
+        'e-svg': { label: 'SVG', icon: 'svg' },
+      };
+      const widget = widgetMap[element.widgetType] || { label: element.widgetType, icon: 'default' };
+      label = widget.label;
+      iconKey = widget.icon;
+    } else if (element.elType === 'e-div-block') {
+      const tag = element.settings?.tag?.value || 'div';
+      label = tag.charAt(0).toUpperCase() + tag.slice(1);
+      iconKey = tag;
+    } else if (element.elType === 'e-flexbox') {
+      label = 'Flexbox';
+      iconKey = 'container';
+    } else {
+      label = element.elType || 'Element';
+    }
+
     const info = {
-      icon: ICONS[element.name] || ICONS.default,
-      // icon: ICONS[element.settings.tag] || ICONS.default,
-      label: element.name || 'div',
-      // label: element.settings.tag || 'div',
+      icon: ICONS[iconKey] || ICONS.default,
+      label: label,
       className: '',
     };
 
-    if (element.settings?._cssGlobalClasses?.length > 0) {
-      const classId = element.settings._cssGlobalClasses[0];
-      const globalClass = globalClasses.find(gc => gc.id === classId);
-      if (globalClass) {
-        info.className = `.${globalClass.name}`;
-      }
+    // Get class name if exists
+    if (element.settings?.classes?.value?.length > 0) {
+      const classId = element.settings.classes.value[0];
+      info.className = `.${classId}`;
     }
+
     return info;
   };
 

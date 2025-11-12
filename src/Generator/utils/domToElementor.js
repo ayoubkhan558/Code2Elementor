@@ -7,6 +7,7 @@ import { processButtonElement } from './elementProcessors/buttonProcessor';
 import { processStructureLayoutElement } from './elementProcessors/structureLayoutProcessor';
 import { getElementLabel } from './elementProcessors/labelUtils';
 import { processTextElement } from './elementProcessors/textElementProcessor';
+import { processParagraphElement } from './elementProcessors/paragraphProcessor';
 import { processAttributes } from './processors/attributeProcessor';
 import { processYoutubeElement } from './elementProcessors/youtubeProcessor';
 import { processDividerElement } from './elementProcessors/dividerProcessor';
@@ -138,27 +139,7 @@ const domNodeToElementor = (node, cssRulesMap = {}, parentId = '0', globalClasse
   console.log('Context in domNodeToElementor:', { showNodeClass, inlineStyleHandling, cssTarget });
   // Handle text nodes
   if (node.nodeType !== Node.ELEMENT_NODE) {
-    // Skip text nodes that are inside a heading element
-    if ((node.parentElement && node.parentElement.closest &&
-      node.parentElement.matches('h1, h2, h3, h4, h5, h6')) ||
-      !node.textContent.trim()) {
-      return null;
-    }
-
-    if (node.nodeType === Node.TEXT_NODE) {
-      const textElement = {
-        id: getUniqueId(),
-        name: 'text-basic',
-        parent: parentId,
-        children: [],
-        settings: {
-          text: node.textContent.trim(),
-          tag: 'p'
-        }
-      };
-      allElements.push(textElement);
-      return textElement;
-    }
+    // Skip all text nodes - they will be captured by their parent elements
     return null;
   }
 
@@ -224,8 +205,12 @@ const domNodeToElementor = (node, cssRulesMap = {}, parentId = '0', globalClasse
   else if (['h1', 'h2', 'h3', 'h4', 'h5', 'h6'].includes(tag)) {
     element = processHeadingElement(node, { id: elementId }, tag, options.context || {});
   }
-  // Paragraph and text elements
-  else if (['time', 'mark', 'span', 'address', 'p', 'blockquote'].includes(tag)) {
+  // Paragraph elements
+  else if (tag === 'p') {
+    element = processParagraphElement(node, { id: elementId }, tag, options.context || {});
+  }
+  // Other text elements
+  else if (['time', 'mark', 'span', 'address', 'blockquote'].includes(tag)) {
     element = processTextElement(node, { id: elementId }, tag, allElements, options.context || {});
   }
   // Image elements
