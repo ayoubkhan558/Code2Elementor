@@ -1,0 +1,118 @@
+:root {
+  /* Elementor Theme */
+  --color-primary: #d30c5c;
+  --color-secondary: #92003b;
+  --color-accent: #e91571;
+  --color-bg: #F5F5F1;
+  --color-surface: #ffffff;
+  --color-surface-2: #f8f8f8;
+  --color-surface-3: #f0f0f0;
+  --color-border: #e0e0e0;
+  --color-text: #333333;
+  --color-text-secondary: #757575;
+  --color-text-on-primary: #ffffff;
+  --color-shadow: rgba(0, 0, 0, 0.1);
+  --header-height: 64px;
+  --border-radius: 8px;
+  --box-shadow: 0 2px 8px var(--color-shadow);
+}
+
+.structure-view {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  padding: 16px;
+  background-color: var(--color-surface);
+  color: var(--color-text);
+  border-radius: var(--border-radius);
+  height: 100%;
+  overflow: auto;
+
+  ul {
+    list-style-type: none;
+    padding-left: 18px;
+    margin: 0;
+  }
+
+  li {
+    position: relative;
+
+    .node-content {
+      display: flex;
+      align-items: center;
+      padding: 5px 5px;
+      cursor: pointer;
+      border-radius: 4px;
+      background-color: var(--color-surface-2);
+      transition: background-color 0.2s ease;
+      margin-bottom: 5px;
+
+      &:hover {
+        background-color: var(--color-surface-3);
+      }
+
+      position: relative;
+
+      &::before,
+      &::after {
+        content: '';
+        position: absolute;
+        left: -15px;
+      }
+
+      &::before {
+        border-top: 1px solid var(--color-border);
+        top: 12px;
+        width: 10px;
+        height: 0;
+      }
+
+      &::after {
+        border-left: 1px solid var(--color-border);
+        height: 100%;
+        width: 0px;
+        top: -5px;
+      }
+
+      &:last-child::after {
+        height: 18px;
+      }
+    }
+
+    .node-toggle {
+      width: 16px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--color-text-secondary);
+
+      .no-toggle {
+        width: 16px;
+      }
+    }
+
+    .node-icon {
+      margin: 0 6px;
+      color: var(--color-text-secondary);
+      display: inline-flex;
+      align-items: center;
+    }
+
+    .node-tag {
+      padding: 2px 5px;
+      font-size: 0.8em;
+      line-height: 1;
+      line-height: 1;
+      font-weight: 500;
+      color: var(--color-primary);
+      background-color: var(--color-primary-light);
+    }
+
+    .node-class {
+      font-size: 0.8em;
+      line-height: 1;
+      color: var(--color-text-secondary);
+      background-color: var(--color-surface-2);
+      padding: 2px 5px;
+      border-radius: 3px;
+    }
+  }
+}
