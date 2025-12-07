@@ -1,0 +1,250 @@
+{
+    "type": "elementor",
+    "siteurl": "http://localhost/wordpress/wp-json/",
+    "elements": [
+        {
+            "id": "eb334aa",
+            "elType": "e-div-block",
+            "isInner": false,
+            "isLocked": false,
+            "settings": {
+                "classes": {
+                    "$$type": "classes",
+                    "value": [
+                        "g-eb5f842"
+                    ]
+                }
+            },
+            "defaultEditSettings": {
+                "defaultEditRoute": "content"
+            },
+            "elements": [
+                {
+                    "id": "f77f80c",
+                    "elType": "e-flexbox",
+                    "isInner": false,
+                    "isLocked": false,
+                    "settings": {
+                        "classes": {
+                            "$$type": "classes",
+                            "value": [
+                                "e-f77f80c-ae3e686"
+                            ]
+                        }
+                    },
+                    "defaultEditSettings": {
+                        "defaultEditRoute": "content"
+                    },
+                    "elements": [
+                        {
+                            "id": "a2f0c37",
+                            "elType": "widget",
+                            "isInner": false,
+                            "isLocked": false,
+                            "settings": {
+                                "classes": {
+                                    "$$type": "classes",
+                                    "value": [
+                                        "g-72fe4af"
+                                    ]
+                                },
+                                "tag": {
+                                    "$$type": "string",
+                                    "value": "h3"
+                                }
+                            },
+                            "defaultEditSettings": {
+                                "defaultEditRoute": "content"
+                            },
+                            "elements": [],
+                            "title": "Heading",
+                            "categories": [
+                                "v4-elements"
+                            ],
+                            "keywords": [
+                                "ato",
+                                "atom",
+                                "atoms",
+                                "atomic"
+                            ],
+                            "icon": "eicon-e-heading",
+                            "widgetType": "e-heading",
+                            "hideOnSearch": false,
+                            "editSettings": {
+                                "defaultEditRoute": "content"
+                            },
+                            "htmlCache": ""
+                        },
+                        {
+                            "id": "b34315c",
+                            "elType": "widget",
+                            "isInner": false,
+                            "isLocked": false,
+                            "settings": {
+                                "classes": {
+                                    "$$type": "classes",
+                                    "value": [
+                                        "g-1813098"
+                                    ]
+                                },
+                                "image": {
+                                    "$$type": "image",
+                                    "value": {
+                                        "src": {
+                                            "$$type": "image-src",
+                                            "value": {
+                                                "id": {
+                                                    "$$type": "image-attachment-id",
+                                                    "value": 94
+                                                },
+                                                "url": null
+                                            }
+                                        }
+                                    }
+                                }
+                            },
+                            "defaultEditSettings": {
+                                "defaultEditRoute": "content"
+                            },
+                            "elements": [],
+                            "title": "Image",
+                            "categories": [
+                                "v4-elements"
+                            ],
+                            "keywords": [
+                                "ato",
+                                "atom",
+                                "atoms",
+                                "atomic"
+                            ],
+                            "icon": "eicon-e-image",
+                            "widgetType": "e-image",
+                            "hideOnSearch": false,
+                            "editSettings": {
+                                "defaultEditRoute": "content"
+                            },
+                            "htmlCache": ""
+                        },
+                        {
+                            "id": "1b14161",
+                            "elType": "widget",
+                            "isInner": false,
+                            "isLocked": false,
+                            "settings": {},
+                            "defaultEditSettings": {
+                                "defaultEditRoute": "content"
+                            },
+                            "elements": [],
+                            "title": "Paragraph",
+                            "categories": [
+                                "v4-elements"
+                            ],
+                            "keywords": [
+                                "ato",
+                                "atom",
+                                "atoms",
+                                "atomic"
+                            ],
+                            "icon": "eicon-paragraph",
+                            "widgetType": "e-paragraph",
+                            "hideOnSearch": false,
+                            "editSettings": {
+                                "defaultEditRoute": "content"
+                            },
+                            "htmlCache": ""
+                        },
+                        {
+                            "id": "e2b35c9",
+                            "elType": "widget",
+                            "isInner": false,
+                            "isLocked": false,
+                            "settings": {
+                                "classes": {
+                                    "$$type": "classes",
+                                    "value": [
+                                        "g-a960066"
+                                    ]
+                                }
+                            },
+                            "defaultEditSettings": {
+                                "defaultEditRoute": "content"
+                            },
+                            "elements": [],
+                            "title": "Button",
+                            "categories": [
+                                "v4-elements"
+                            ],
+                            "keywords": [
+                                "ato",
+                                "atom",
+                                "atoms",
+                                "atomic"
+                            ],
+                            "icon": "eicon-e-button",
+                            "widgetType": "e-button",
+                            "hideOnSearch": false,
+                            "editSettings": {
+                                "defaultEditRoute": "content"
+                            },
+                            "htmlCache": ""
+                        }
+                    ],
+                    "title": "Flexbox",
+                    "categories": [
+                        "v4-elements"
+                    ],
+                    "keywords": [
+                        "ato",
+                        "atom",
+                        "atoms",
+                        "atomic"
+                    ],
+                    "icon": "eicon-flexbox",
+                    "widgetType": "",
+                    "hideOnSearch": false,
+                    "editSettings": {
+                        "defaultEditRoute": "content"
+                    },
+                    "styles": {
+                        "e-f77f80c-ae3e686": {
+                            "id": "e-f77f80c-ae3e686",
+                            "label": "local",
+                            "type": "class",
+                            "variants": [
+                                {
+                                    "meta": {
+                                        "breakpoint": "desktop",
+                                        "state": null
+                                    },
+                                    "props": {
+                                        "flex-direction": {
+                                            "$$type": "string",
+                                            "value": "column"
+                                        }
+                                    },
+                                    "custom_css": null
+                                }
+                            ]
+                        }
+                    }
+                }
+            ],
+            "title": "Div block",
+            "categories": [
+                "v4-elements"
+            ],
+            "keywords": [
+                "ato",
+                "atom",
+                "atoms",
+                "atomic"
+            ],
+            "icon": "eicon-div-block",
+            "widgetType": "",
+            "hideOnSearch": false,
+            "editSettings": {
+                "defaultEditRoute": "content"
+            }
+        }
+    ]
+}

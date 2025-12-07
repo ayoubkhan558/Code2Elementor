@@ -75,19 +75,19 @@ const handleInlineStyles = (node, element, globalClasses, variables = {}, option
         const firstClassId = element.settings._cssGlobalClasses[0];
         targetClass = globalClasses.find(c => c.id === firstClassId);
       }
-      
+
       // Convert inline styles to a class and merge with existing settings
       console.log('Converting inline styles to class for element:', element.id, styleAttr, targetClass?.name, variables);
 
       if (targetClass) {
         // Parse the inline styles
         const parsedInlineStyles = parseCssDeclarations(styleAttr, targetClass.name, variables);
-        
+
         // Ensure _typography exists in the target class
         if (!targetClass.settings._typography) {
           targetClass.settings._typography = {};
         }
-        
+
         // Deep merge the inline styles with existing styles
         if (parsedInlineStyles._typography) {
           targetClass.settings._typography = {
@@ -95,7 +95,7 @@ const handleInlineStyles = (node, element, globalClasses, variables = {}, option
             ...parsedInlineStyles._typography,   // Apply inline styles on top
           };
         }
-        
+
         // Merge any other settings (like _cssCustom, etc.)
         Object.entries(parsedInlineStyles).forEach(([key, value]) => {
           if (key !== '_typography') {
@@ -183,9 +183,9 @@ const domNodeToElementor = (node, cssRulesMap = {}, parentId = '0', globalClasse
   }
   // Check for flexbox containers
   else if ((tag === 'div' && node.style.display === 'flex') ||
-      node.classList.contains('flex') ||
-      node.classList.contains('flexbox') ||
-      node.classList.contains('d-flex')) {
+    node.classList.contains('flex') ||
+    node.classList.contains('flexbox') ||
+    node.classList.contains('d-flex')) {
     element = processFlexboxElement(node, { id: elementId }, tag, options.context || {});
   }
   // Structure/layout elements (Div block)
@@ -255,7 +255,7 @@ const domNodeToElementor = (node, cssRulesMap = {}, parentId = '0', globalClasse
       }
       const childElement = domNodeToElementor(childNode, cssRulesMap, elementId, globalClasses, allElements, variables, options);
       if (childElement && childElement.id) {
-        element.elements.push(childElement.id);
+        element.elements.push(childElement);
       }
     });
   }
@@ -276,7 +276,6 @@ const domNodeToElementor = (node, cssRulesMap = {}, parentId = '0', globalClasse
   delete element._skipTextNodes;
   delete element._skipChildren;
 
-  allElements.push(element);
   return element;
 };
 
@@ -338,19 +337,48 @@ const convertHtmlToElementor = (html, css, options) => {
       processNodes(doc.head.childNodes);
     }
 
-    allElements.forEach(el => {
-      if (!content.some(c => c.id === el.id)) {
-        content.push(el);
-      }
-    });
+    // Wrap single non-container elements in a container
+    // Check if we need to wrap content in a container
+    const needsWrapper = content.length > 0 && content.some(el =>
+      el.elType === 'widget' || // widgets should be inside containers
+      (el.elType !== 'e-div-block' && el.elType !== 'e-flexbox') // non-container elements
+    );
+
+    let finalContent = content;
+    if (needsWrapper && content.length > 0 && content[0].elType !== 'e-div-block' && content[0].elType !== 'e-flexbox') {
+      // Wrap all content in a container
+      const containerId = getUniqueId();
+      const containerElement = {
+        id: containerId,
+        elType: 'e-div-block',
+        isInner: false,
+        isLocked: false,
+        settings: {},
+        defaultEditSettings: {
+          defaultEditRoute: 'content'
+        },
+        elements: content,
+        title: 'Container',
+        categories: ['v4-elements'],
+        keywords: ['ato', 'atom', 'atoms', 'atomic'],
+        icon: 'eicon-div-block',
+        widgetType: '',
+        hideOnSearch: false,
+        editSettings: {
+          defaultEditRoute: 'content'
+        },
+        htmlCache: null
+      };
+      finalContent = [containerElement];
+    }
 
     if (rootStyles) {
       // Split the combined root styles back into individual root blocks
       const rootBlocks = rootStyles.split(';').filter(block => block.trim() !== '');
-      
+
       // Create a single root block with all variables
       const combinedRootStyles = `:root {\n  ${rootBlocks.join(';\n  ')};\n}`;
-      
+
       if (globalClasses.length > 0) {
         const firstClass = globalClasses[0];
         if (!firstClass.settings._cssCustom) {
@@ -371,7 +399,8 @@ const convertHtmlToElementor = (html, css, options) => {
     return {
       type: 'elementor',
       siteurl: 'http://localhost/wp-json/',
-      elements: content
+      elements: finalContent,
+      globalClasses: globalClasses
     };
   } catch (error) {
     console.error('Error converting HTML to Elementor:', error);

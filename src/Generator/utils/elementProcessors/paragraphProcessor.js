@@ -8,8 +8,14 @@
  */
 export const processParagraphElement = (node, element, tag, context = {}) => {
   const paragraphText = node.textContent.trim();
-  
-  return {
+
+  // Generate a class ID for styling
+  const classId = `g-${Math.random().toString(36).substr(2, 7)}`;
+
+  // Get existing classes from the node
+  const classList = node.classList ? Array.from(node.classList) : [];
+
+  const paragraphElement = {
     id: element.id,
     elType: 'widget',
     isInner: false,
@@ -18,7 +24,8 @@ export const processParagraphElement = (node, element, tag, context = {}) => {
       paragraph: {
         $$type: 'string',
         value: paragraphText
-      }
+      },
+      _element_id: node.id || ''
     },
     defaultEditSettings: {
       defaultEditRoute: 'content'
@@ -37,4 +44,14 @@ export const processParagraphElement = (node, element, tag, context = {}) => {
     _skipTextNodes: true,
     _skipChildren: true
   };
+
+  // Add classes if element has CSS classes
+  if (classList.length > 0) {
+    paragraphElement.settings.classes = {
+      $$type: 'classes',
+      value: [classId]
+    };
+  }
+
+  return paragraphElement;
 };

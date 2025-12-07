@@ -84,31 +84,15 @@ const StructureView = ({ data, globalClasses, activeIndex, showNodeClass }) => {
   }
 
   // Build tree structure from Elementor elements
-  const elementsById = data.reduce((acc, el) => {
-    acc[el.id] = { ...el, children: [] };
-    return acc;
-  }, {});
+  // Helper function to recursively build tree from nested elements
+  const buildTree = (elements) => {
+    return elements.map(el => ({
+      ...el,
+      children: el.elements && Array.isArray(el.elements) ? buildTree(el.elements) : []
+    }));
+  };
 
-  // For Elementor format, all elements are at root level
-  // We need to build hierarchy based on elements array
-  const roots = [];
-  data.forEach(el => {
-    // If element has elements array, populate children
-    if (el.elements && Array.isArray(el.elements)) {
-      el.elements.forEach(childId => {
-        if (elementsById[childId]) {
-          elementsById[el.id].children.push(elementsById[childId]);
-        }
-      });
-    }
-    // Add to roots if it's not referenced as a child anywhere
-    const isChild = data.some(parent => 
-      parent.elements && Array.isArray(parent.elements) && parent.elements.includes(el.id)
-    );
-    if (!isChild) {
-      roots.push(elementsById[el.id]);
-    }
-  });
+  const roots = buildTree(data);
 
   const getElementInfo = (element) => {
     // Determine element type from Elementor structure

@@ -372,7 +372,7 @@ const GeneratorComponent = () => {
               <div className="structure-panel__content">
                 {output ? (
                   <StructureView
-                    data={output ? JSON.parse(output).content : []}
+                    data={output ? JSON.parse(output).elements : []}
                     globalClasses={output ? JSON.parse(output).globalClasses : []}
                     activeIndex={activeTagIndex}
                     showNodeClass={showNodeClass}

@@ -12,14 +12,14 @@ import { getElementLabel } from './labelUtils';
 export const processButtonElement = (node, element, tag = 'button', context = {}) => {
   // Generate unique ID for the button element
   const elementId = getUniqueId();
-  
+
   // Extract button text
   const buttonText = node.textContent?.trim() || 'Button';
-  
+
   // Extract link if button is wrapped in anchor or has onclick
   let linkUrl = '#';
   let isTargetBlank = false;
-  
+
   // Check if button is inside an anchor tag
   const parentAnchor = node.closest('a');
   if (parentAnchor) {
@@ -31,8 +31,14 @@ export const processButtonElement = (node, element, tag = 'button', context = {}
     linkUrl = node.getAttribute('href') || '#';
     isTargetBlank = node.getAttribute('target') === '_blank';
   }
-  
+
   // Create Elementor button structure
+  // Generate a class ID for styling
+  const classId = `g-${Math.random().toString(36).substr(2, 7)}`;
+
+  // Get existing classes from the node
+  const classList = node.classList ? Array.from(node.classList) : [];
+
   const buttonElement = {
     id: elementId,
     elType: 'widget',
@@ -63,7 +69,15 @@ export const processButtonElement = (node, element, tag = 'button', context = {}
     },
     htmlCache: ''
   };
-  
+
+  // Add classes if element has CSS classes
+  if (classList.length > 0) {
+    buttonElement.settings.classes = {
+      $$type: 'classes',
+      value: [classId]
+    };
+  }
+
   // Add link settings if URL is not just '#'
   if (linkUrl && linkUrl !== '#') {
     buttonElement.settings.link = {

@@ -12,7 +12,7 @@ import { getElementLabel } from './labelUtils';
 export const processFlexboxElement = (node, element, tag, context = {}) => {
   // Generate unique ID for the flexbox element
   const elementId = getUniqueId();
-  
+
   // Create Elementor flexbox structure
   const flexboxElement = {
     id: elementId,
@@ -37,15 +37,35 @@ export const processFlexboxElement = (node, element, tag, context = {}) => {
     },
     htmlCache: null
   };
-  
+
   // Add classes if element has CSS classes
   const classList = node.classList ? Array.from(node.classList) : [];
-  if (classList.length > 0) {
-    // Generate a global class ID for styling
-    const globalClassId = `g-${Math.random().toString(36).substr(2, 7)}`;
+  // Generate a class ID for styling (used whether or not element has classes)
+  const classId = `e-${elementId}-${Math.random().toString(36).substr(2, 7)}`;
+
+  if (classList.length > 0 || true) { // Always add classes for flexbox
     flexboxElement.settings.classes = {
       $$type: 'classes',
-      value: [globalClassId]
+      value: [classId]
+    };
+
+    // Add styles object for local class styling
+    flexboxElement.styles = {
+      [classId]: {
+        id: classId,
+        label: 'local',
+        type: 'class',
+        variants: [
+          {
+            meta: {
+              breakpoint: 'desktop',
+              state: null
+            },
+            props: {},
+            custom_css: null
+          }
+        ]
+      }
     };
   }
 
