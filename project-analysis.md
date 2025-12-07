@@ -88,7 +88,7 @@
 - `background-clip`, `-webkit-background-clip`
 - `background-blend-mode`
 
-### Effects (✅ Fully Supported)
+### Effects (Partially Supported)
 - `opacity`, `mix-blend-mode`
 - `box-shadow`
 - `filter` (blur, brightness, contrast, saturate, hue-rotate, grayscale, invert, sepia, drop-shadow)
