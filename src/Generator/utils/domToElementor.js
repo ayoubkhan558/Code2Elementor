@@ -276,7 +276,28 @@ const domNodeToElementor = (node, cssRulesMap = {}, parentId = '0', globalClasse
 
     if (Object.keys(matchedCss).length > 0) {
       // Convert CSS to Elementor props format
-      const elementorProps = cssToElementorProps(matchedCss, variables);
+      // Now returns { props, customCss }
+      const conversionResult = cssToElementorProps(matchedCss, variables);
+      const elementorProps = conversionResult.props || {};
+      const customCssString = conversionResult.customCss || null;
+
+      // Base64 encode custom CSS if present
+      let encodedCustomCss = null;
+      if (customCssString) {
+        try {
+          // Use Buffer if in Node, otherwise btoa
+          if (typeof Buffer !== 'undefined') {
+            encodedCustomCss = Buffer.from(customCssString).toString('base64');
+          } else if (typeof btoa === 'function') {
+            encodedCustomCss = btoa(customCssString);
+          } else {
+            // Fallback for environments without Buffer or btoa (unlikely in modern JS)
+            console.warn('Cannot encode custom CSS: No Base64 encoder found');
+          }
+        } catch (e) {
+          console.error('Error encoding custom CSS:', e);
+        }
+      }
 
       // Generate local class ID if element doesn't have styles yet
       if (!element.styles || Object.keys(element.styles).length === 0) {
@@ -295,7 +316,7 @@ const domNodeToElementor = (node, cssRulesMap = {}, parentId = '0', globalClasse
                   state: null
                 },
                 props: elementorProps,
-                custom_css: null
+                custom_css: encodedCustomCss ? { raw: encodedCustomCss } : null
               }
             ]
           }
@@ -317,6 +338,13 @@ const domNodeToElementor = (node, cssRulesMap = {}, parentId = '0', globalClasse
               ...element.styles[classId].variants[0].props,
               ...elementorProps
             };
+
+            // Merge or set custom CSS
+            if (encodedCustomCss) {
+              // If there was existing custom CSS (decoded), append new one? 
+              // For simplicity, we mostly overwrite or initialize here since this is generation phase
+              element.styles[classId].variants[0].custom_css = { raw: encodedCustomCss };
+            }
           }
         }
       }

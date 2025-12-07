@@ -10,7 +10,7 @@ import { parseSizeValue, createStringValue, createColorValue, createNumberValue 
  * Reference format from Elementor:
  * - hOffset, vOffset, blur, spread are $$type: 'size'
  * - color is $$type: 'color'  
- * - position is null for outset, 'inset' for inset shadows
+ * - position is null for outset, { $$type: 'string', value: 'inset' } for inset shadows
  */
 const parseBoxShadow = (value) => {
   if (!value || value === 'none') {
@@ -66,7 +66,7 @@ const parseBoxShadow = (value) => {
           blur: parseSizeValue(sizeMatches[2] || '0px'),
           spread: parseSizeValue(sizeMatches[3] || '0px'),
           color: createColorValue(color),
-          position: isInset ? 'inset' : null
+          position: isInset ? createStringValue('inset') : null
         }
       });
     }

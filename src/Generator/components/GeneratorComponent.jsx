@@ -181,8 +181,73 @@ const GeneratorComponent = () => {
       {/* Header */}
       <header className="app-header">
         <div className="app-header__logo">
-          <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 100 100">
-            <title>Elmentra</title><g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><g id="Landingpage" transform="translate(-743.000000, -5186.000000)" fill-rule="nonzero"><g id="Group-36" transform="translate(0.000000, 4798.000000)"><g id="Plugins-Copy" transform="translate(273.000000, 325.000000)"><g id="Group-27"><g id="Group-11-Copy-27" transform="translate(427.000000, 31.000000)"><g id="elementor-logo" transform="translate(43.000000, 32.000000)"><path d="M94.9993478,0 L4.99956522,0 C2.23195652,0 0,2.23217391 0,5 L0,94.9995652 C0,97.7673913 2.23195652,99.9995652 4.99956522,99.9995652 L94.9993478,99.9995652 C97.7671739,99.9995652 99.9991304,97.7673913 99.9991304,94.9995652 L99.9991304,5 C99.9991304,2.23217391 97.7671739,0 94.9993478,0" id="Path" fill="#D63362"></path><rect id="Rectangle" fill="#FFFFFF" x="27.7904348" y="27.7904348" width="8.88369565" height="44.4193478"></rect><rect id="Rectangle" fill="#FFFFFF" x="45.5578261" y="63.3258696" width="26.673913" height="8.88391304"></rect><rect id="Rectangle" fill="#FFFFFF" x="45.5578261" y="45.5578261" width="26.673913" height="8.88369565"></rect><rect id="Rectangle" fill="#FFFFFF" x="45.5578261" y="27.7680435" width="26.673913" height="8.88369565"></rect></g></g></g></g></g></g></g>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            xmlnsXlink="http://www.w3.org/1999/xlink"
+            viewBox="0 0 100 100"
+          >
+            <title>{"Elmentra"}</title>
+            <g id="Page-1" stroke="none" strokeWidth={1} fill="none" fillRule="evenodd">
+              <g
+                id="Landingpage"
+                transform="translate(-743.000000, -5186.000000)"
+                fillRule="nonzero"
+              >
+                <g id="Group-36" transform="translate(0.000000, 4798.000000)">
+                  <g id="Plugins-Copy" transform="translate(273.000000, 325.000000)">
+                    <g id="Group-27">
+                      <g
+                        id="Group-11-Copy-27"
+                        transform="translate(427.000000, 31.000000)"
+                      >
+                        <g
+                          id="elementor-logo"
+                          transform="translate(43.000000, 32.000000)"
+                        >
+                          <path
+                            d="M94.9993478,0 L4.99956522,0 C2.23195652,0 0,2.23217391 0,5 L0,94.9995652 C0,97.7673913 2.23195652,99.9995652 4.99956522,99.9995652 L94.9993478,99.9995652 C97.7671739,99.9995652 99.9991304,97.7673913 99.9991304,94.9995652 L99.9991304,5 C99.9991304,2.23217391 97.7671739,0 94.9993478,0"
+                            id="Path"
+                            fill="#D63362"
+                          />
+                          <rect
+                            id="Rectangle"
+                            fill="#FFFFFF"
+                            x={27.7904348}
+                            y={27.7904348}
+                            width={8.88369565}
+                            height={44.4193478}
+                          />
+                          <rect
+                            id="Rectangle"
+                            fill="#FFFFFF"
+                            x={45.5578261}
+                            y={63.3258696}
+                            width={26.673913}
+                            height={8.88391304}
+                          />
+                          <rect
+                            id="Rectangle"
+                            fill="#FFFFFF"
+                            x={45.5578261}
+                            y={45.5578261}
+                            width={26.673913}
+                            height={8.88369565}
+                          />
+                          <rect
+                            id="Rectangle"
+                            fill="#FFFFFF"
+                            x={45.5578261}
+                            y={27.7680435}
+                            width={26.673913}
+                            height={8.88369565}
+                          />
+                        </g>
+                      </g>
+                    </g>
+                  </g>
+                </g>
+              </g>
+            </g>
           </svg>
           <span>Elmentra </span>
           <div className="app-header__buttons">
