@@ -1,5 +1,5 @@
 import { getUniqueId } from './utils';
-import { buildCssMap, parseCssDeclarations, matchCSSSelectors } from './cssParser';
+import { buildCssMap, parseCssDeclarations, matchCSSSelectors, cssToElementorProps } from './cssParser';
 import { processImageElement } from './elementProcessors/imageProcessor';
 import { processSvgElement } from './elementProcessors/svgProcessor';
 import { processHeadingElement } from './elementProcessors/headingProcessor';
@@ -188,18 +188,26 @@ const domNodeToElementor = (node, cssRulesMap = {}, parentId = '0', globalClasse
     node.classList.contains('d-flex')) {
     element = processFlexboxElement(node, { id: elementId }, tag, options.context || {});
   }
-  // Structure/layout elements (Div block)
-  else if (tag === 'section' ||
-    node.classList.contains('container') ||
-    node.classList.contains('row') ||
-    node.classList.contains('col-') ||
-    node.classList.contains('section') ||
-    (tag === 'div' && hasContainerClasses(node))) {
-    element = processStructureLayoutElement(node, { id: elementId }, tag, options.context || {});
-  }
-  else if (tag === 'div') {
-    // Process as generic div if no special classes are present
-    element = processStructureLayoutElement(node, { id: elementId }, 'div', options.context || {});
+  // Check if div/section/container has ONLY text content (no element children)
+  else if (['div', 'section', 'article', 'aside'].includes(tag)) {
+    const hasElementChildren = Array.from(node.childNodes).some(child => child.nodeType === Node.ELEMENT_NODE);
+    const hasTextContent = node.textContent.trim().length > 0;
+
+    if (!hasElementChildren && hasTextContent) {
+      // Convert to text element instead of div block
+      element = processTextElement(node, { id: elementId }, tag, [], options.context || {});
+    } else if (tag === 'section' ||
+      node.classList.contains('container') ||
+      node.classList.contains('row') ||
+      node.classList.contains('col-') ||
+      node.classList.contains('section') ||
+      hasContainerClasses(node)) {
+      // Structure/layout elements (Div block)
+      element = processStructureLayoutElement(node, { id: elementId }, tag, options.context || {});
+    } else {
+      // Process as generic div
+      element = processStructureLayoutElement(node, { id: elementId }, 'div', options.context || {});
+    }
   }
   // Heading elements
   else if (['h1', 'h2', 'h3', 'h4', 'h5', 'h6'].includes(tag)) {
@@ -260,15 +268,58 @@ const domNodeToElementor = (node, cssRulesMap = {}, parentId = '0', globalClasse
     });
   }
 
-  // Handle CSS classes for Elementor
-  const existingClasses = node.classList && node.classList.length > 0 ? Array.from(node.classList) : [];
-  if (existingClasses.length > 0) {
-    const globalClassId = `g-${Math.random().toString(36).substr(2, 7)}`;
-    if (!element.settings.classes) {
-      element.settings.classes = {
-        $$type: 'classes',
-        value: [globalClassId]
-      };
+  // Apply CSS as local styles
+  // Match CSS rules and populate styles.variants.props
+  if (cssRulesMap && Object.keys(cssRulesMap).length > 0) {
+    // Get matched CSS properties for this element
+    const matchedCss = matchCSSSelectors(node, cssRulesMap);
+
+    if (Object.keys(matchedCss).length > 0) {
+      // Convert CSS to Elementor props format
+      const elementorProps = cssToElementorProps(matchedCss, variables);
+
+      // Generate local class ID if element doesn't have styles yet
+      if (!element.styles || Object.keys(element.styles).length === 0) {
+        const localClassId = `e-${elementId}-${Math.random().toString(36).substr(2, 7)}`;
+
+        // Create styles object with local style
+        element.styles = {
+          [localClassId]: {
+            id: localClassId,
+            label: 'local',
+            type: 'class',
+            variants: [
+              {
+                meta: {
+                  breakpoint: 'desktop',
+                  state: null
+                },
+                props: elementorProps,
+                custom_css: null
+              }
+            ]
+          }
+        };
+
+        // Update settings.classes to reference the local style
+        element.settings.classes = {
+          $$type: 'classes',
+          value: [localClassId]
+        };
+      } else {
+        // Element already has styles, update the props
+        const styleKeys = Object.keys(element.styles);
+        if (styleKeys.length > 0) {
+          const classId = styleKeys[0];
+          if (element.styles[classId] && element.styles[classId].variants && element.styles[classId].variants[0]) {
+            // Merge existing props with new ones
+            element.styles[classId].variants[0].props = {
+              ...element.styles[classId].variants[0].props,
+              ...elementorProps
+            };
+          }
+        }
+      }
     }
   }
 

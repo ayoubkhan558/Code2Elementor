@@ -35,6 +35,10 @@ export const processFlexboxElement = (node, element, tag, context = {}) => {
     editSettings: {
       defaultEditRoute: 'content'
     },
+    // Add label from class name or tag
+    editor_settings: {
+      title: getElementLabel(node, 'Flexbox', context)
+    },
     htmlCache: null
   };
 

@@ -1,12 +1,6 @@
 // cssParser.js
 // CSS parsing utilities
-import { elementorSizingMappers } from './propertyMappers/elementor-sizing';
-import { elementorLayoutMappers } from './propertyMappers/elementor-layout';
-import { elementorPositionMappers } from './propertyMappers/elementor-position';
-import { elementorBorderMappers } from './propertyMappers/elementor-border';
-import { elementorTypographyMappers } from './propertyMappers/elementor-typography';
-import { elementorBackgroundMappers } from './propertyMappers/elementor-background';
-import { elementorEffectsMappers } from './propertyMappers/elementor-effects';
+import { CSS_PROP_MAPPERS, isPropertySupported, getMapper } from './propertyMappers';
 
 // Convert basic color names to hex; pass through hex values
 export function toHex(val) {
@@ -90,114 +84,39 @@ export const parseValue = (value) => {
 };
 
 // CSS properties Elementor has native controls for and how to map them
+// Now uses unified CSS_PROP_MAPPERS from propertyMappers
 export const getCssPropMappers = (settings) => {
-  const mappers = {
-    // Sizing Properties
-    'width': elementorSizingMappers['width'],
-    'height': elementorSizingMappers['height'],
-    'min-width': elementorSizingMappers['min-width'],
-    'max-width': elementorSizingMappers['max-width'],
-    'min-height': elementorSizingMappers['min-height'],
-    'max-height': elementorSizingMappers['max-height'],
-    'overflow': elementorSizingMappers['overflow'],
-    'overflow-x': elementorSizingMappers['overflow-x'],
-    'overflow-y': elementorSizingMappers['overflow-y'],
-    'aspect-ratio': elementorSizingMappers['aspect-ratio'],
-    'object-fit': elementorSizingMappers['object-fit'],
-    'object-position': elementorSizingMappers['object-position'],
+  // Return all property mappers plus special handlers
+  return {
+    ...CSS_PROP_MAPPERS,
 
-    // Layout Properties
-    'display': elementorLayoutMappers['display'],
-    'flex-direction': elementorLayoutMappers['flex-direction'],
-    'justify-content': elementorLayoutMappers['justify-content'],
-    'align-items': elementorLayoutMappers['align-items'],
-    'gap': elementorLayoutMappers['gap'],
-    'flex-wrap': elementorLayoutMappers['flex-wrap'],
-    'align-content': elementorLayoutMappers['align-content'],
-    'margin': elementorLayoutMappers['margin'],
-
-    // Position Properties
-    'position': elementorPositionMappers['position'],
-    'inset-inline-end': elementorPositionMappers['inset-inline-end'],
-    'inset-block-start': elementorPositionMappers['inset-block-start'],
-    'inset-block-end': elementorPositionMappers['inset-block-end'],
-    'inset-inline-start': elementorPositionMappers['inset-inline-start'],
-    'z-index': elementorPositionMappers['z-index'],
-    'scroll-margin-top': elementorPositionMappers['scroll-margin-top'],
-
-    // Border Properties
-    'border-radius': elementorBorderMappers['border-radius'],
-    'border-width': elementorBorderMappers['border-width'],
-    'border-color': elementorBorderMappers['border-color'],
-    'border-style': elementorBorderMappers['border-style'],
-
-    // Typography Properties
-    'font-family': elementorTypographyMappers['font-family'],
-    'font-weight': elementorTypographyMappers['font-weight'],
-    'font-size': elementorTypographyMappers['font-size'],
-    'text-align': elementorTypographyMappers['text-align'],
-    'color': elementorTypographyMappers['color'],
-    'line-height': elementorTypographyMappers['line-height'],
-    'letter-spacing': elementorTypographyMappers['letter-spacing'],
-    'word-spacing': elementorTypographyMappers['word-spacing'],
-    'column-count': elementorTypographyMappers['column-count'],
-    'column-gap': elementorTypographyMappers['column-gap'],
-    'text-decoration': elementorTypographyMappers['text-decoration'],
-    'text-transform': elementorTypographyMappers['text-transform'],
-    'direction': elementorTypographyMappers['direction'],
-    'font-style': elementorTypographyMappers['font-style'],
-    'stroke': elementorTypographyMappers['stroke'],
-    '-webkit-text-stroke-width': elementorTypographyMappers['-webkit-text-stroke-width'],
-    '-webkit-text-stroke-color': elementorTypographyMappers['-webkit-text-stroke-color'],
-
-    // Background Properties
-    'background': elementorBackgroundMappers['background'],
-    'background-color': elementorBackgroundMappers['background-color'],
-    'background-image': elementorBackgroundMappers['background-image'],
-    'background-clip': elementorBackgroundMappers['background-clip'],
-    '-webkit-background-clip': elementorBackgroundMappers['-webkit-background-clip'],
-
-    // Effects Properties
-    'mix-blend-mode': elementorEffectsMappers['mix-blend-mode'],
-    'opacity': elementorEffectsMappers['opacity'],
-    'box-shadow': elementorEffectsMappers['box-shadow'],
-    'transform': elementorEffectsMappers['transform'],
-    'transition': elementorEffectsMappers['transition'],
-    'filter': elementorEffectsMappers['filter'],
-
-    // CSS Classes & ID
-    'css-classes': (val, settings) => {
-      settings._cssClasses = val;
+    // CSS Classes & ID (legacy handler)
+    'css-classes': (val) => {
+      if (settings) settings._cssClasses = val;
+      return {};
     },
 
-    // Special mapper for pseudo-classes
-    '_pseudo': (value, settings, pseudoClass) => {
+    // Special mapper for pseudo-classes (legacy handler)
+    '_pseudo': (value, pseudoClass) => {
+      if (!settings) return {};
       if (!settings._pseudo) settings._pseudo = {};
       if (!settings._pseudo[pseudoClass]) settings._pseudo[pseudoClass] = {};
 
       // Handle nested properties for pseudo-classes
       if (value.startsWith('_')) {
-        // Handle Elementor-specific properties like _background, _typography
         const [prop, val] = value.split(':').map(s => s.trim());
         settings._pseudo[pseudoClass][prop] = JSON.parse(val);
       } else {
-        // Handle regular CSS properties
         const [prop, val] = value.split(':').map(s => s.trim());
-        const normalizedProp = prop.replace(/-([a-z])/g, (_, letter) => letter.toUpperCase());
-        const mapper = getCssPropMappers(settings)[prop] || getCssPropMappers(settings)[normalizedProp];
-
+        const mapper = getMapper(prop);
         if (mapper) {
-          const pseudoSettings = {};
-          mapper(val, pseudoSettings);
-          Object.assign(settings._pseudo[pseudoClass], pseudoSettings);
+          const result = mapper(val);
+          Object.assign(settings._pseudo[pseudoClass], result);
         }
       }
+      return {};
     },
   };
-
-  // Note: Grid and advanced flexbox properties can be added here if needed in the future
-
-  return mappers;
 };
 
 // Parse CSS declarations into Elementor settings
@@ -298,6 +217,58 @@ export function parseCssDeclarations(combinedProperties, className = '', variabl
   }
 
   return settings;
+}
+
+/**
+ * Convert CSS properties to Elementor's props format for styles.variants.props
+ * Also collects unsupported properties for custom_css.raw
+ * @param {Object} cssProperties - Object of CSS property:value pairs
+ * @param {Object} variables - CSS variables for resolution
+ * @returns {Object} { props: Elementor-formatted props, customCss: raw CSS string for unsupported properties }
+ */
+export function cssToElementorProps(cssProperties, variables = {}) {
+  const props = {};
+  const unsupportedCss = [];
+
+  const resolveCssVariables = (value) => {
+    if (typeof value !== 'string' || !value.includes('var(')) {
+      return value;
+    }
+    return value.replace(/var\((--[\w-]+)\)/g, (match, varName) => {
+      return variables[varName] || match;
+    });
+  };
+
+  Object.entries(cssProperties).forEach(([prop, value]) => {
+    const resolvedValue = resolveCssVariables(value);
+    const normalizedProp = prop.replace(/-([a-z])/g, (_, letter) => letter.toUpperCase());
+    const CSS_PROP_MAPPERS = getCssPropMappers({});
+    const mapper = CSS_PROP_MAPPERS[prop] || CSS_PROP_MAPPERS[normalizedProp];
+
+    if (mapper && typeof mapper === 'function') {
+      try {
+        const result = mapper(resolvedValue);
+        if (result && typeof result === 'object' && Object.keys(result).length > 0) {
+          // Mapper returned valid props
+          Object.assign(props, result);
+        } else {
+          // Mapper returned empty object (unsupported or invalid value)
+          unsupportedCss.push(`${prop}: ${resolvedValue};`);
+        }
+      } catch (e) {
+        console.error(`Error processing ${prop}: ${resolvedValue}`, e);
+        unsupportedCss.push(`${prop}: ${resolvedValue};`);
+      }
+    } else {
+      // No mapper for this property - add to unsupported
+      unsupportedCss.push(`${prop}: ${resolvedValue};`);
+    }
+  });
+
+  return {
+    props,
+    customCss: unsupportedCss.length > 0 ? unsupportedCss.join('\n') : null
+  };
 }
 
 // Enhanced CSS matching function
@@ -428,7 +399,7 @@ export function buildCssMap(cssText) {
         if (trimmed === ':root') {
           // Add to root styles array
           rootStyles.push(properties);
-          
+
           // Process variables from all root blocks
           properties.split(';').forEach(prop => {
             const [key, value] = prop.split(':').map(s => s.trim());

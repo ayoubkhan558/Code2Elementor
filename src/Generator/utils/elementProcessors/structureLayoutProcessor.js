@@ -12,16 +12,16 @@ import { getElementLabel } from './labelUtils';
 export const processStructureLayoutElement = (node, element, tag, context = {}) => {
   // Generate unique ID for the div block element
   const elementId = getUniqueId();
-  
+
   // Supported HTML tags for Elementor Div block: div, header, footer, section, article, aside
   const supportedTags = ['div', 'header', 'footer', 'section', 'article', 'aside', 'main', 'nav'];
-  
+
   // Determine the appropriate tag
   let htmlTag = 'div';
   if (supportedTags.includes(tag)) {
     htmlTag = tag;
   }
-  
+
   // Determine title based on tag
   const tagTitles = {
     'div': 'Div block',
@@ -34,7 +34,7 @@ export const processStructureLayoutElement = (node, element, tag, context = {}) 
     'nav': 'Navigation'
   };
   const title = tagTitles[htmlTag] || 'Div block';
-  
+
   // Create Elementor div block structure
   const divElement = {
     id: elementId,
@@ -57,9 +57,13 @@ export const processStructureLayoutElement = (node, element, tag, context = {}) 
     editSettings: {
       defaultEditRoute: 'content'
     },
+    // Add label from class name or tag
+    editor_settings: {
+      title: getElementLabel(node, title, context)
+    },
     htmlCache: null
   };
-  
+
   // Add tag setting if not default div
   if (htmlTag !== 'div') {
     divElement.settings.tag = {
@@ -67,7 +71,7 @@ export const processStructureLayoutElement = (node, element, tag, context = {}) 
       value: htmlTag
     };
   }
-  
+
   // Add classes if element has CSS classes
   const classList = node.classList ? Array.from(node.classList) : [];
   if (classList.length > 0) {

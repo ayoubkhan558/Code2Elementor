@@ -2,200 +2,123 @@
  * Elementor Typography Property Mappers
  * Converts CSS typography properties to Elementor's JSON format
  */
-
-/**
- * Parse size value with unit
- * @param {string} value - CSS value (e.g., "16px", "115%")
- * @returns {Object} Elementor size object
- */
-const parseSizeValue = (value) => {
-  if (!value || value === 'auto' || value === 'none') {
-    return {
-      $$type: 'size',
-      value: {
-        size: '',
-        unit: 'auto'
-      }
-    };
-  }
-
-  // Handle calc() and other custom values
-  if (value.includes('calc(') || value.includes('var(')) {
-    return {
-      $$type: 'size',
-      value: {
-        size: value,
-        unit: 'custom'
-      }
-    };
-  }
-
-  // Extract number and unit
-  const match = value.match(/^([+-]?[\d.]+)([a-z%]+)$/i);
-  if (match) {
-    const size = parseFloat(match[1]);
-    const unit = match[2];
-    return {
-      $$type: 'size',
-      value: {
-        size: size,
-        unit: unit
-      }
-    };
-  }
-
-  // Fallback for unitless values
-  const numValue = parseFloat(value);
-  if (!isNaN(numValue)) {
-    return {
-      $$type: 'size',
-      value: {
-        size: numValue,
-        unit: 'px'
-      }
-    };
-  }
-
-  return {
-    $$type: 'size',
-    value: {
-      size: '',
-      unit: 'auto'
-    }
-  };
-};
+import { parseSizeValue, createStringValue, createColorValue, createNumberValue } from './mapperUtils';
 
 /**
  * Elementor Typography Mappers
  */
 export const elementorTypographyMappers = {
   // Font Family
-  'font-family': (value) => {
-    return {
-      'font-family': {
-        $$type: 'string',
-        value: value
-      }
-    };
-  },
+  'font-family': (value) => ({
+    'font-family': createStringValue(value)
+  }),
 
   // Font Weight
-  'font-weight': (value) => {
-    return {
-      'font-weight': {
-        $$type: 'string',
-        value: value
-      }
-    };
-  },
+  'font-weight': (value) => ({
+    'font-weight': createStringValue(String(value))
+  }),
 
   // Font Size
-  'font-size': (value) => {
-    return {
-      'font-size': parseSizeValue(value)
-    };
-  },
+  'font-size': (value) => ({
+    'font-size': parseSizeValue(value)
+  }),
 
   // Text Align
-  'text-align': (value) => {
-    return {
-      'text-align': {
-        $$type: 'string',
-        value: value
-      }
-    };
-  },
+  'text-align': (value) => ({
+    'text-align': createStringValue(value)
+  }),
 
   // Color
-  'color': (value) => {
-    return {
-      color: {
-        $$type: 'color',
-        value: value
-      }
-    };
-  },
+  'color': (value) => ({
+    color: createColorValue(value)
+  }),
 
   // Line Height
-  'line-height': (value) => {
-    return {
-      'line-height': parseSizeValue(value)
-    };
-  },
+  'line-height': (value) => ({
+    'line-height': parseSizeValue(value)
+  }),
 
   // Letter Spacing
-  'letter-spacing': (value) => {
-    return {
-      'letter-spacing': parseSizeValue(value)
-    };
-  },
+  'letter-spacing': (value) => ({
+    'letter-spacing': parseSizeValue(value)
+  }),
 
   // Word Spacing
-  'word-spacing': (value) => {
-    return {
-      'word-spacing': parseSizeValue(value)
-    };
-  },
+  'word-spacing': (value) => ({
+    'word-spacing': parseSizeValue(value)
+  }),
 
   // Column Count
-  'column-count': (value) => {
-    const numValue = parseInt(value, 10);
-    return {
-      'column-count': {
-        $$type: 'number',
-        value: isNaN(numValue) ? 1 : numValue
-      }
-    };
-  },
+  'column-count': (value) => ({
+    'column-count': createNumberValue(value)
+  }),
 
-  // Column Gap
-  'column-gap': (value) => {
-    return {
-      'column-gap': parseSizeValue(value)
-    };
-  },
+  // Typography Column Gap
+  'column-gap': (value) => ({
+    'column-gap': parseSizeValue(value)
+  }),
 
   // Text Decoration
-  'text-decoration': (value) => {
-    return {
-      'text-decoration': {
-        $$type: 'string',
-        value: value
-      }
-    };
-  },
+  'text-decoration': (value) => ({
+    'text-decoration': createStringValue(value)
+  }),
+
+  // Text Decoration Line
+  'text-decoration-line': (value) => ({
+    'text-decoration-line': createStringValue(value)
+  }),
+
+  // Text Decoration Style
+  'text-decoration-style': (value) => ({
+    'text-decoration-style': createStringValue(value)
+  }),
+
+  // Text Decoration Color
+  'text-decoration-color': (value) => ({
+    'text-decoration-color': createColorValue(value)
+  }),
 
   // Text Transform
-  'text-transform': (value) => {
-    return {
-      'text-transform': {
-        $$type: 'string',
-        value: value
-      }
-    };
-  },
+  'text-transform': (value) => ({
+    'text-transform': createStringValue(value)
+  }),
 
   // Direction
-  'direction': (value) => {
-    return {
-      direction: {
-        $$type: 'string',
-        value: value
-      }
-    };
-  },
+  'direction': (value) => ({
+    direction: createStringValue(value)
+  }),
 
   // Font Style
-  'font-style': (value) => {
-    return {
-      'font-style': {
-        $$type: 'string',
-        value: value
-      }
-    };
-  },
+  'font-style': (value) => ({
+    'font-style': createStringValue(value)
+  }),
 
-  // Stroke (text stroke)
+  // Text Shadow
+  'text-shadow': (value) => ({
+    'text-shadow': createStringValue(value)
+  }),
+
+  // White Space
+  'white-space': (value) => ({
+    'white-space': createStringValue(value)
+  }),
+
+  // Word Break
+  'word-break': (value) => ({
+    'word-break': createStringValue(value)
+  }),
+
+  // Text Overflow
+  'text-overflow': (value) => ({
+    'text-overflow': createStringValue(value)
+  }),
+
+  // Text Indent
+  'text-indent': (value) => ({
+    'text-indent': parseSizeValue(value)
+  }),
+
+  // Stroke (text stroke) - complex type
   'stroke': (value) => {
     // Parse stroke value (e.g., "1px #ddb0b0")
     const match = value.match(/^([^\s]+)\s+(.+)$/);
@@ -206,61 +129,62 @@ export const elementorTypographyMappers = {
         stroke: {
           $$type: 'stroke',
           value: {
-            color: {
-              $$type: 'color',
-              value: color
-            },
+            color: createColorValue(color),
             width: parseSizeValue(width)
           }
         }
       };
     }
-    
+
     // Fallback
     return {
       stroke: {
         $$type: 'stroke',
         value: {
-          color: {
-            $$type: 'color',
-            value: '#000000'
-          },
+          color: createColorValue('#000000'),
           width: {
             $$type: 'size',
-            value: {
-              size: 1,
-              unit: 'px'
-            }
+            value: { size: 1, unit: 'px' }
           }
         }
       }
     };
   },
 
-  // -webkit-text-stroke-width (alternative stroke property)
-  '-webkit-text-stroke-width': (value) => {
-    return {
-      stroke: {
-        $$type: 'stroke',
-        value: {
-          width: parseSizeValue(value)
-        }
+  // -webkit-text-stroke-width
+  '-webkit-text-stroke-width': (value) => ({
+    stroke: {
+      $$type: 'stroke',
+      value: {
+        width: parseSizeValue(value)
       }
-    };
-  },
+    }
+  }),
 
-  // -webkit-text-stroke-color (alternative stroke property)
-  '-webkit-text-stroke-color': (value) => {
-    return {
-      stroke: {
-        $$type: 'stroke',
-        value: {
-          color: {
-            $$type: 'color',
-            value: value
+  // -webkit-text-stroke-color
+  '-webkit-text-stroke-color': (value) => ({
+    stroke: {
+      $$type: 'stroke',
+      value: {
+        color: createColorValue(value)
+      }
+    }
+  }),
+
+  // -webkit-text-stroke (shorthand)
+  '-webkit-text-stroke': (value) => {
+    const match = value.match(/^([^\s]+)\s+(.+)$/);
+    if (match) {
+      return {
+        stroke: {
+          $$type: 'stroke',
+          value: {
+            width: parseSizeValue(match[1]),
+            color: createColorValue(match[2])
           }
         }
-      }
-    };
+      };
+    }
+    return {};
   }
 };

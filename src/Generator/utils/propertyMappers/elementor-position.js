@@ -2,126 +2,96 @@
  * Elementor Position Property Mappers
  * Converts CSS position properties to Elementor's JSON format
  */
-
-/**
- * Parse size value with unit
- * @param {string} value - CSS value (e.g., "32px", "50%", "auto")
- * @returns {Object} Elementor size object
- */
-const parseSizeValue = (value) => {
-  if (!value || value === 'auto' || value === 'none') {
-    return {
-      $$type: 'size',
-      value: {
-        size: '',
-        unit: 'auto'
-      }
-    };
-  }
-
-  // Handle calc() and other custom values
-  if (value.includes('calc(') || value.includes('var(')) {
-    return {
-      $$type: 'size',
-      value: {
-        size: value,
-        unit: 'custom'
-      }
-    };
-  }
-
-  // Extract number and unit
-  const match = value.match(/^([+-]?[\d.]+)([a-z%]+)$/i);
-  if (match) {
-    const size = parseFloat(match[1]);
-    const unit = match[2];
-    return {
-      $$type: 'size',
-      value: {
-        size: size,
-        unit: unit
-      }
-    };
-  }
-
-  // Fallback for unitless values
-  const numValue = parseFloat(value);
-  if (!isNaN(numValue)) {
-    return {
-      $$type: 'size',
-      value: {
-        size: numValue,
-        unit: 'px'
-      }
-    };
-  }
-
-  return {
-    $$type: 'size',
-    value: {
-      size: '',
-      unit: 'auto'
-    }
-  };
-};
+import { parseSizeValue, createStringValue, createNumberValue } from './mapperUtils';
 
 /**
  * Elementor Position Mappers
  */
 export const elementorPositionMappers = {
   // Position
-  'position': (value) => {
-    return {
-      position: {
-        $$type: 'string',
-        value: value
-      }
-    };
-  },
+  'position': (value) => ({
+    position: createStringValue(value)
+  }),
 
-  // Inset Inline End (right in LTR)
-  'inset-inline-end': (value) => {
-    return {
-      'inset-inline-end': parseSizeValue(value)
-    };
-  },
+  // Traditional position properties (converted to logical properties)
+  'top': (value) => ({
+    'inset-block-start': parseSizeValue(value)
+  }),
+  'right': (value) => ({
+    'inset-inline-end': parseSizeValue(value)
+  }),
+  'bottom': (value) => ({
+    'inset-block-end': parseSizeValue(value)
+  }),
+  'left': (value) => ({
+    'inset-inline-start': parseSizeValue(value)
+  }),
 
-  // Inset Block Start (top)
-  'inset-block-start': (value) => {
-    return {
-      'inset-block-start': parseSizeValue(value)
-    };
-  },
+  // Logical position properties
+  'inset-inline-end': (value) => ({
+    'inset-inline-end': parseSizeValue(value)
+  }),
+  'inset-block-start': (value) => ({
+    'inset-block-start': parseSizeValue(value)
+  }),
+  'inset-block-end': (value) => ({
+    'inset-block-end': parseSizeValue(value)
+  }),
+  'inset-inline-start': (value) => ({
+    'inset-inline-start': parseSizeValue(value)
+  }),
 
-  // Inset Block End (bottom)
-  'inset-block-end': (value) => {
-    return {
-      'inset-block-end': parseSizeValue(value)
-    };
-  },
+  // Inset shorthand
+  'inset': (value) => {
+    const values = value.trim().split(/\s+/);
+    let top, right, bottom, left;
 
-  // Inset Inline Start (left in LTR)
-  'inset-inline-start': (value) => {
+    if (values.length === 1) {
+      top = right = bottom = left = values[0];
+    } else if (values.length === 2) {
+      top = bottom = values[0];
+      right = left = values[1];
+    } else if (values.length === 3) {
+      top = values[0];
+      right = left = values[1];
+      bottom = values[2];
+    } else {
+      top = values[0];
+      right = values[1];
+      bottom = values[2];
+      left = values[3];
+    }
+
     return {
-      'inset-inline-start': parseSizeValue(value)
+      'inset-block-start': parseSizeValue(top),
+      'inset-inline-end': parseSizeValue(right),
+      'inset-block-end': parseSizeValue(bottom),
+      'inset-inline-start': parseSizeValue(left)
     };
   },
 
   // Z-Index
-  'z-index': (value) => {
-    const numValue = parseInt(value, 10);
-    return {
-      'z-index': {
-        $$type: 'number',
-        value: isNaN(numValue) ? 0 : numValue
-      }
-    };
-  },
+  'z-index': (value) => ({
+    'z-index': createNumberValue(value)
+  }),
 
   // Scroll Margin Top
-  'scroll-margin-top': (value) => {
-    return {
-      'scroll-margin-top': parseSizeValue(value)
-    };
-  }
+  'scroll-margin-top': (value) => ({
+    'scroll-margin-top': parseSizeValue(value)
+  }),
+
+  // Float
+  'float': (value) => ({
+    'float': createStringValue(value)
+  }),
+
+  // Clear
+  'clear': (value) => ({
+    'clear': createStringValue(value)
+  }),
+
+  // Vertical Align
+  'vertical-align': (value) => ({
+    'vertical-align': createStringValue(value)
+  })
 };

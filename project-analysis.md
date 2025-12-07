@@ -1,276 +1,163 @@
 # Code2Elementor Project Analysis
 
-## Project Requirements Analysis
+## Supported Features
 
-### Objective
-Convert raw HTML/CSS/JS into Elementor-compatible JSON for rapid template creation, with live preview and configurable output options.
+### HTML Elements
+| Element | Status | Elementor Widget |
+|---------|--------|-----------------|
+| `<div>` | ✅ | e-div-block |
+| `<section>` | ✅ | e-div-block |
+| `<article>` | ✅ | e-div-block |
+| `<aside>` | ✅ | e-div-block |
+| `<header>` | ✅ | e-div-block |
+| `<footer>` | ✅ | e-div-block |
+| `<h1>-<h6>` | ✅ | e-heading |
+| `<p>` | ✅ | e-paragraph |
+| `<button>` | ✅ | e-button |
+| `<a>` | ✅ | e-button |
+| `<img>` | ✅ | e-image |
+| `<svg>` | ✅ | e-image (SVG) |
+| `<hr>` | ✅ | e-divider |
+| `<iframe>` (YouTube) | ✅ | video |
+| Flexbox containers | ✅ | e-flexbox |
+| Text-only divs | ✅ | e-paragraph |
 
-### Inputs
-- HTML string
-- CSS string (optional)
-- JS string (optional)
-- Generator options: CSS handling mode (skip/inline/convert-to-classes), include/exclude JS, minify/pretty print JSON, preview toggles.
-
-### Outputs
-- Elementor JSON (minified or pretty)
-- Optional inclusion of processed JS
-- Element structure tree view
-- Live rendered HTML preview
-
-### Core Functional Requirements
-- Parse HTML DOM reliably and preserve hierarchy.
-- Map HTML elements to Elementor components via per-element processors:
-  - **Div block** - Container and layout elements
-  - **Flexbox** - Flexbox container elements
-  - **Heading** - H1-H6 heading elements
-  - **Image** - Image elements
-  - **Paragraph** - Text and paragraph elements
-  - **SVG** - SVG graphics
-  - **Button** - Button elements
-  - **YouTube** - YouTube video embeds
-  - **Divider** - Horizontal dividers/separators
-- Convert CSS rules to Elementor style format:
-  - Support typography, background, layout (sizing/spacing/positioning), display, grid/flex, borders/shadows, transitions/filters, transforms, scroll, misc layout.
-  - Respect pseudo-classes like :hover, :focus.
-  - Optional conversion to classes vs inline vs skip.
-- Handle advanced cases:
-  - Flexbox layouts
-  - Data attributes
-  - Dynamic classes
-  - YouTube video detection
-- Include custom JS (optional) in output.
-- Provide live preview and structure tree.
-- Output options: copy to clipboard, exclude JS, minified/pretty JSON.
-
-### Non-Functional Requirements
-- Client-side only; modern browsers (DOMParser).
-- Quick, responsive UI (React 19, Vite 6).
-- Maintainable modular utilities and processors.
-- ESLint configured (flat config), unit tests via Vitest.
-- No special env vars; Yarn scripts for dev/build/test.
-
-### Constraints and Assumptions
-- No backend / DB / auth.
-- Parsing is based on standard DOM; Shadow DOM/external resources may require special handling or are out of scope.
-- Elementor JSON must conform to expected schema (enforced via mappers/processors).
-- Large CSS files/media queries may need careful performance handling.
-
-### Edge Cases to Consider
-- Invalid or malformed HTML.
-- Deeply nested elements with conflicting CSS specificity.
-- External assets (images/fonts) not available at preview time.
-- Complex SVGs and inline styles.
-- Unsupported/unknown HTML tags.
-- Pseudo-elements (::before/::after) and complex media queries mapping.
-- YouTube embed detection from iframes.
-
-### Success Metrics
-- Correctness of Elementor JSON output that renders as intended in Elementor.
-- Fidelity of styles after conversion.
-- Stable performance for typical page-sized inputs.
-- Usability: clear structure view, preview parity, straightforward options.
+### Not Yet Supported
+| Element | Status |
+|---------|--------|
+| `<table>` | ❌ |
+| `<ul>/<ol>/<li>` | ❌ |
+| `<form>` elements | ❌ |
+| Grid layout | ❌ |
+| `<video>` | ❌ |
+| `<audio>` | ❌ |
 
 ---
 
-## Project Folder Structure Guide
+## Supported CSS Properties
 
-### Root Files
-```
-/
-├── package.json           # Scripts and dependencies (React/Vite/Vitest/ESLint)
-├── vite.config.js         # Vite configuration
-├── eslint.config.js       # Flat ESLint config
-├── yarn.lock              # Yarn dependency lock
-├── index.html             # App HTML shell
-├── README.md              # Project overview
-└── code2Elementor.md      # Additional documentation
-```
+### Sizing (✅ Fully Supported)
+- `width`, `height`
+- `min-width`, `max-width`, `min-height`, `max-height`
+- `overflow`, `overflow-x`, `overflow-y`
+- `aspect-ratio`
+- `object-fit`, `object-position`
+- `box-sizing`
 
-### Source Directory (`src/`)
+### Layout (✅ Fully Supported)
+- `display`
+- `flex-direction`, `flex-wrap`, `flex`, `flex-grow`, `flex-shrink`, `flex-basis`
+- `justify-content`, `align-items`, `align-content`, `align-self`, `justify-self`
+- `gap`, `row-gap`, `column-gap`
+- `order`
+- `margin` (all sides + shorthand)
+- `padding` (all sides + shorthand)
 
-#### Entry Points
-```
-src/
-├── App.jsx                # Root app component
-├── App.scss               # Global styles
-└── main.jsx               # React/Vite entry
-```
+### Position (✅ Fully Supported)
+- `position`
+- `top`, `right`, `bottom`, `left` (converted to logical properties)
+- `inset`, `inset-block-start`, `inset-block-end`, `inset-inline-start`, `inset-inline-end`
+- `z-index`
+- `float`, `clear`
+- `vertical-align`
+- `scroll-margin-top`
 
-#### Theme
-```
-src/theme/
-└── codemirror-theme.js    # Code editor theme setup
-```
+### Typography (✅ Fully Supported)
+- `font-family`, `font-size`, `font-weight`, `font-style`
+- `color`
+- `text-align`, `text-decoration`, `text-transform`, `text-indent`
+- `line-height`, `letter-spacing`, `word-spacing`
+- `white-space`, `word-break`, `text-overflow`
+- `direction`
+- `column-count`, `column-gap`
+- `-webkit-text-stroke`, stroke width/color
 
-#### Contexts
-```
-src/contexts/
-├── AppContext.jsx         # App-wide settings/state
-└── GeneratorContext.jsx   # Generator-specific state and options
-```
+### Border (✅ Fully Supported)
+- `border` (shorthand + individual sides)
+- `border-width` (all sides)
+- `border-color` (all sides)
+- `border-style` (all sides)
+- `border-radius` (all corners)
+- `outline`, `outline-width`, `outline-style`, `outline-color`, `outline-offset`
 
-#### Shared Components
-```
-src/components/
-├── CodeEditor.jsx         # Shared editor wrapper
-├── Tooltip.jsx            # UI helper component
-└── Tooltip.scss           # Tooltip styles
-```
+### Background (✅ Partially Supported)
+- `background`, `background-color`
+- `background-image` (gradients + URLs)
+- `background-size`, `background-position`, `background-repeat`
+- `background-attachment`, `background-origin`
+- `background-clip`, `-webkit-background-clip`
+- `background-blend-mode`
 
-#### Generator Module
-```
-src/Generator/
-├── index.jsx              # Generator page/entry
-├── Generator.scss         # Styles for generator screen
-└── CssMatcher.jsx         # CSS matching helper UI
-```
-
-##### Generator Components
-```
-src/Generator/components/
-├── GeneratorComponent.jsx     # Main generator UI container
-├── GeneratorComponent.scss    # Generator container styles
-├── CodeEditor.jsx             # Editor for HTML/CSS/JS input
-├── Preview.jsx                # Live preview panel
-├── Preview.scss               # Preview panel styles
-├── StructureView.jsx          # Tree view for element hierarchy
-├── StructureView.scss         # Structure view styles
-├── AboutModal.jsx             # About/help modal
-└── AboutModal.scss            # About modal styles
-```
-
-##### Generator Utils
-```
-src/Generator/utils/
-├── elementorGenerator.js  # High-level assembly to produce Elementor JSON
-├── domToElementor.js         # Core HTML → Elementor conversion pipeline
-├── cssParser.js           # CSS parsing to internal representation
-├── jsProcessor.js         # JS inclusion/processing logic
-└── utils.js               # Shared utility functions
-```
-
-##### Processors
-```
-src/Generator/utils/processors/
-└── attributeProcessor.js  # General attribute handling (data-* etc.)
-```
-
-##### Element Processors
-```
-src/Generator/utils/elementProcessors/
-├── buttonProcessor.js             # Button elements
-├── dividerProcessor.js            # Divider/separator elements  
-├── flexboxProcessor.js            # Flexbox container elements
-├── headingProcessor.js            # Heading elements (h1-h6)
-├── imageProcessor.js              # Image elements
-├── labelUtils.js                  # Label utilities
-├── structureLayoutProcessor.js    # Structural/layout elements (div, section, etc.)
-├── svgProcessor.js                # SVG elements
-├── textElementProcessor.js        # Text/paragraph elements
-└── youtubeProcessor.js            # YouTube video elements
-```
-
-##### Property Mappers (CSS → Elementor Style)
-```
-src/Generator/utils/propertyMappers/
-├── index.js                   # Main mapper export
-├── mapperUtils.js             # Shared mapper utilities
-├── background.js              # Background properties
-├── boder-box-shadow.js        # Border and box-shadow properties
-├── content-flexbox.js         # Flexbox properties
-├── content-grid.js            # Grid properties
-├── display.js                 # Display properties
-├── filters-transitions.js     # Filters and transitions
-├── layout-misc.js             # Miscellaneous layout
-├── layout-position.js         # Position properties
-├── layout-scroll-snap.js      # Scroll snap properties
-├── layout-sizing.js           # Sizing properties (width, height)
-├── layout-spacing.js          # Spacing properties (margin, padding)
-├── scroll.js                  # Scroll properties
-├── transforms.js              # Transform properties
-└── typography.js              # Typography properties
-```
-
-#### Tests
-```
-src/__tests__/
-└── heading.test.js        # Vitest unit tests example
-```
+### Effects (✅ Fully Supported)
+- `opacity`, `mix-blend-mode`
+- `box-shadow`
+- `filter` (blur, brightness, contrast, saturate, hue-rotate, grayscale, invert, sepia, drop-shadow)
+- `backdrop-filter`
+- `transform` (rotate, scale, translate, skew)
+- `transform-origin`, `perspective`
+- `transition`
+- `animation` (all properties)
+- `cursor`, `pointer-events`, `user-select`, `visibility`
+- `clip-path`, `will-change`
 
 ---
 
-## Suggested Directory Additions
+## Architecture
 
-For future scalability (no files created unless requested):
+### Property Mappers (`src/Generator/utils/propertyMappers/`)
+
+The code is modular and easily extensible:
 
 ```
-src/hooks/                 # Custom hooks (e.g., useGeneratorOptions, useClipboard)
-src/constants/             # Constants/enums (CSS modes, default options)
-src/types/                 # JSDoc or TS type definitions/interfaces
-src/fixtures/              # Sample HTML/CSS/JS inputs for testing/demo
-src/lib/                   # Shared pure functions (parsers/mappers)
-tests/                     # Broader unit/integration tests
-e2e/                       # End-to-end tests (Playwright/Cypress)
+propertyMappers/
+├── index.js           # Main export, combines all mappers
+├── mapperUtils.js     # Shared utilities (parseSizeValue, createStringValue, etc.)
+├── elementor-sizing.js
+├── elementor-layout.js
+├── elementor-position.js
+├── elementor-border.js
+├── elementor-typography.js
+├── elementor-background.js
+└── elementor-effects.js
 ```
 
----
+### Adding New Properties
 
-## Quick Workflow Overview
+1. Open the relevant mapper file (or create a new one)
+2. Import utilities from `mapperUtils.js`
+3. Add property mapper function:
 
-1. **User inputs HTML/CSS/JS** in `GeneratorComponent`
-2. **CSS parsing**: `cssParser.js` parses CSS
-3. **Style mapping**: `propertyMappers/*` map styles into Elementor format
-4. **DOM traversal**: `domToElementor.js` walks the DOM
-5. **Element processing**: `elementProcessors/*` build Elementor JSON nodes
-6. **JS handling**: `jsProcessor.js` optionally injects or attaches JS
-7. **Assembly**: `elementorGenerator.js` coordinates pipeline and produces final JSON
-8. **Display**: `StructureView` shows tree; `Preview` renders HTML; options control output formatting
+```javascript
+'new-property': (value) => ({
+  'new-property': createStringValue(value)
+})
+```
 
----
-
-## Supported Elementor Elements
-
-The following Elementor elements are currently supported:
-
-1. **Div Block** (`structureLayoutProcessor.js`) - Container and section elements
-2. **Flexbox** (`flexboxProcessor.js`) - Flexbox container elements with display:flex
-3. **Heading** (`headingProcessor.js`) - H1-H6 heading elements
-4. **Image** (`imageProcessor.js`) - Image elements
-5. **Paragraph** (`textElementProcessor.js`) - Text and paragraph elements (p, span, etc.)
-6. **SVG** (`svgProcessor.js`) - SVG graphics
-7. **Button** (`buttonProcessor.js`) - Button elements
-8. **YouTube** (`youtubeProcessor.js`) - YouTube video iframes
-9. **Divider** (`dividerProcessor.js`) - Horizontal dividers (hr tags, .divider, .separator)
-
-### Next Steps for Implementation
-
-Each processor file has placeholder settings that need to be replaced with actual Elementor JSON structure. Provide the JSON output from Elementor for each element type to update:
-
-- `youtubeProcessor.js` - Needs Elementor video widget JSON structure
-- `dividerProcessor.js` - Needs Elementor divider widget JSON structure  
-- `flexboxProcessor.js` - Needs Elementor flexbox container JSON structure
-- Other processors may need updates to match Elementor's exact JSON format
+4. If creating a new category, add to `index.js` imports
 
 ---
 
-## Technology Stack
+## Style Application
 
-- **Frontend Framework**: React 19
-- **Build Tool**: Vite 6
-- **Styling**: Sass, CSS Modules
-- **Code Editing**: `@uiw/react-codemirror` with HTML/CSS language support
-- **Syntax Highlighting**: PrismJS
-- **Linting**: ESLint with React plugins
-- **Testing**: Vitest
-- **Dependency Management**: Yarn
+### Local Styles Only
+- All CSS is converted to **local styles** attached to each element
+- Style ID format: `e-{elementId}-{random}`
+- Style label: `"local"`
+- CSS properties populate `styles.variants.props`
 
 ---
 
-## Development Commands
+## Elementor v4 Compatibility
+- ✅ Uses v4 element types (`e-div-block`, `e-paragraph`, etc.)
+- ✅ Uses `$$type` for typed values
+- ✅ Nested element structure (full objects, not IDs)
+- ✅ Local class styling with `styles` object
+- ✅ `editor_settings.title` for element labels
 
-- **Start dev server**: `yarn dev`
-- **Build for production**: `yarn build`
-- **Preview production build**: `yarn preview`
-- **Run linter**: `yarn lint`
-- **Run tests**: `yarn test`
-- **Run tests in watch mode**: `yarn test:watch`
+---
+
+## Known Limitations
+1. Global classes not exported (all styles are local)
+2. Pseudo-class styles (`:hover`) require manual implementation
+3. Media queries not fully supported
+4. CSS Grid not implemented

@@ -10,25 +10,42 @@ This tool is designed to help Elementor users quickly convert their existing HTM
 - Handles various HTML elements including section, div, container, forms, buttons, images, and more
 - Processes inline styles with flexible handling options
 
-### CSS Processing
-- Converts CSS styles into Elementor-compatible format
-- Handles class-based styling with proper specificity
-- Supports pseudo-classes (:hover, :active, :focus, :visited)
-- Preserves class names even without styles
-- Advanced typography property handling (font-weight, font-size, color, etc.)
+### Supported HTML Elements
+| Element | Elementor Widget |
+|---------|-----------------|
+| `<div>`, `<section>`, `<article>`, `<header>`, `<footer>` | e-div-block |
+| `<h1>`-`<h6>` | e-heading |
+| `<p>` | e-paragraph |
+| `<button>`, `<a>` | e-button |
+| `<img>` | e-image |
+| `<svg>` | e-image (SVG) |
+| `<hr>` | e-divider |
+| Flexbox containers | e-flexbox |
+| Text-only divs | e-paragraph |
+
+### CSS Processing (Elementor v4 Local Styles)
+- **All CSS is applied as local styles** attached to each element
+- CSS from class selectors is converted to Elementor's typed format
+- Styles populate `styles.variants.props` with proper `$$type` values
+- Style ID format: `e-{elementId}-{random}` with `label: "local"`
+
+### Supported CSS Properties
+| Category | Properties |
+|----------|-----------|
+| **Sizing** | width, height, min/max-width/height, overflow, aspect-ratio, object-fit |
+| **Layout** | display, flex-direction, justify-content, align-items, gap, flex-wrap, margin, padding |
+| **Position** | position, inset-*, z-index, scroll-margin-top |
+| **Typography** | font-family, font-weight, font-size, text-align, color, line-height, letter-spacing, text-decoration, text-transform |
+| **Border** | border-radius, border-width, border-color, border-style |
+| **Background** | background-color, background-image, background-clip |
+| **Effects** | opacity, mix-blend-mode, box-shadow, transform, transition, filter |
+
+> See [project-analysis.md](project-analysis.md) for complete documentation.
 
 ### JavaScript Integration
 - Processes and includes JavaScript functionality
 - Supports custom JavaScript code integration
 - Maintains global elements and their references
-
-### Style Handling Options
-- **Skip**: Ignores inline styles completely
-- **Inline**: Preserves styles as inline attributes
-- **Class**: Converts inline styles to CSS classes with proper merging
-  - Maintains existing class styles
-  - Merges inline styles with class definitions
-  - Preserves typography and layout properties
 
 ### Preview Functionality
 - Live preview of the generated structure
@@ -40,21 +57,14 @@ This tool is designed to help Elementor users quickly convert their existing HTM
 - Copy to clipboard functionality
 - Option to include/exclude JavaScript
 
-### Advanced Features
-- Handles form elements with proper field types
-- Processes custom attributes and data-* attributes
-- Maintains parent-child relationships in the element tree
-- Supports dynamic class name generation
-- Properly merges inline styles with existing class definitions
-- Handles complex CSS properties and values
-- Preserves media queries and responsive styles
-
 ---
 
 ## Roadmap
 - [x] Add support for inline styles to classes
+- [x] Elementor v4 local style support
+- [x] CSS to Elementor props conversion
 - [ ] Add support for more HTML elements (tables, lists, etc.)
-- [ ] Add support for CSS Grid and Flexbox properties
+- [ ] Add support for CSS Grid properties
 - [ ] Add support for CSS Custom Properties (Variables)
 - [x] Improve typography property handling
 - [ ] Add support for CSS animations and transitions

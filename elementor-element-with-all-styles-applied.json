@@ -1,0 +1,835 @@
+{
+    "type": "elementor",
+    "siteurl": "http://localhost/wordpress/wp-json/",
+    "elements": [
+        {
+            "id": "8df5bec",
+            "elType": "widget",
+            "isInner": false,
+            "isLocked": false,
+            "settings": {
+                "paragraph": {
+                    "$$type": "string",
+                    "value": "Item 1"
+                },
+                "_element_id": "",
+                "classes": {
+                    "$$type": "classes",
+                    "value": [
+                        "e-8df5bec-d55cd58"
+                    ]
+                }
+            },
+            "defaultEditSettings": {
+                "defaultEditRoute": "content"
+            },
+            "elements": [],
+            "widgetType": "e-paragraph",
+            "title": "Paragraph",
+            "categories": [
+                "v4-elements"
+            ],
+            "keywords": [
+                "ato",
+                "atom",
+                "atoms",
+                "atomic"
+            ],
+            "icon": "eicon-paragraph",
+            "hideOnSearch": false,
+            "editSettings": {
+                "defaultEditRoute": "content"
+            },
+            "editor_settings": {
+                "title": "flex-item"
+            },
+            "styles": {
+                "e-8df5bec-d55cd58": {
+                    "id": "e-8df5bec-d55cd58",
+                    "label": "local",
+                    "type": "class",
+                    "variants": [
+                        {
+                            "meta": {
+                                "breakpoint": "desktop",
+                                "state": null
+                            },
+                            "props": {
+                                "display": {
+                                    "$$type": "string",
+                                    "value": "flex"
+                                },
+                                "flex-direction": {
+                                    "$$type": "string",
+                                    "value": "column"
+                                },
+                                "align-items": {
+                                    "$$type": "string",
+                                    "value": "center"
+                                },
+                                "gap": {
+                                    "$$type": "layout-direction",
+                                    "value": {
+                                        "row": {
+                                            "$$type": "size",
+                                            "value": {
+                                                "size": 22,
+                                                "unit": "px"
+                                            }
+                                        },
+                                        "column": {
+                                            "$$type": "size",
+                                            "value": {
+                                                "size": 21,
+                                                "unit": "px"
+                                            }
+                                        }
+                                    }
+                                },
+                                "flex-wrap": {
+                                    "$$type": "string",
+                                    "value": "wrap"
+                                },
+                                "align-content": {
+                                    "$$type": "string",
+                                    "value": "end"
+                                },
+                                "margin": {
+                                    "$$type": "dimensions",
+                                    "value": {
+                                        "block-start": {
+                                            "$$type": "size",
+                                            "value": {
+                                                "size": 34,
+                                                "unit": "px"
+                                            }
+                                        },
+                                        "block-end": {
+                                            "$$type": "size",
+                                            "value": {
+                                                "size": "",
+                                                "unit": "auto"
+                                            }
+                                        },
+                                        "inline-start": {
+                                            "$$type": "size",
+                                            "value": {
+                                                "size": 33,
+                                                "unit": "%"
+                                            }
+                                        },
+                                        "inline-end": {
+                                            "$$type": "size",
+                                            "value": {
+                                                "size": 31,
+                                                "unit": "vw"
+                                            }
+                                        }
+                                    }
+                                },
+                                "padding": {
+                                    "$$type": "dimensions",
+                                    "value": {
+                                        "block-start": {
+                                            "$$type": "size",
+                                            "value": {
+                                                "size": 2,
+                                                "unit": "em"
+                                            }
+                                        },
+                                        "block-end": {
+                                            "$$type": "size",
+                                            "value": {
+                                                "size": 33,
+                                                "unit": "vh"
+                                            }
+                                        },
+                                        "inline-start": {
+                                            "$$type": "size",
+                                            "value": {
+                                                "size": "calc(100%-10px)",
+                                                "unit": "custom"
+                                            }
+                                        },
+                                        "inline-end": {
+                                            "$$type": "size",
+                                            "value": {
+                                                "size": 1,
+                                                "unit": "px"
+                                            }
+                                        }
+                                    }
+                                },
+                                "width": {
+                                    "$$type": "size",
+                                    "value": {
+                                        "size": 33,
+                                        "unit": "px"
+                                    }
+                                },
+                                "height": {
+                                    "$$type": "size",
+                                    "value": {
+                                        "size": "",
+                                        "unit": "auto"
+                                    }
+                                },
+                                "min-height": {
+                                    "$$type": "size",
+                                    "value": {
+                                        "size": 20,
+                                        "unit": "px"
+                                    }
+                                },
+                                "min-width": {
+                                    "$$type": "size",
+                                    "value": {
+                                        "size": 3,
+                                        "unit": "px"
+                                    }
+                                },
+                                "max-height": {
+                                    "$$type": "size",
+                                    "value": {
+                                        "size": 222,
+                                        "unit": "px"
+                                    }
+                                },
+                                "max-width": {
+                                    "$$type": "size",
+                                    "value": {
+                                        "size": 222,
+                                        "unit": "px"
+                                    }
+                                },
+                                "overflow": {
+                                    "$$type": "string",
+                                    "value": "hidden"
+                                },
+                                "aspect-ratio": {
+                                    "$$type": "string",
+                                    "value": "16/10"
+                                },
+                                "object-fit": {
+                                    "$$type": "string",
+                                    "value": "cover"
+                                },
+                                "object-position": {
+                                    "$$type": "string",
+                                    "value": "bottom center"
+                                },
+                                "position": {
+                                    "$$type": "string",
+                                    "value": "absolute"
+                                },
+                                "inset-inline-end": {
+                                    "$$type": "size",
+                                    "value": {
+                                        "size": 33,
+                                        "unit": "%"
+                                    }
+                                },
+                                "inset-block-start": {
+                                    "$$type": "size",
+                                    "value": {
+                                        "size": 1,
+                                        "unit": "rem"
+                                    }
+                                },
+                                "inset-inline-start": {
+                                    "$$type": "size",
+                                    "value": {
+                                        "size": 5,
+                                        "unit": "em"
+                                    }
+                                },
+                                "z-index": {
+                                    "$$type": "number",
+                                    "value": 5
+                                },
+                                "scroll-margin-top": {
+                                    "$$type": "size",
+                                    "value": {
+                                        "size": 34,
+                                        "unit": "px"
+                                    }
+                                },
+                                "font-family": {
+                                    "$$type": "string",
+                                    "value": "Arial"
+                                },
+                                "font-weight": {
+                                    "$$type": "string",
+                                    "value": "300"
+                                },
+                                "font-size": {
+                                    "$$type": "size",
+                                    "value": {
+                                        "size": 15,
+                                        "unit": "px"
+                                    }
+                                },
+                                "text-align": {
+                                    "$$type": "string",
+                                    "value": "end"
+                                },
+                                "color": {
+                                    "$$type": "color",
+                                    "value": "#bf6c6c"
+                                },
+                                "line-height": {
+                                    "$$type": "size",
+                                    "value": {
+                                        "size": 1.5,
+                                        "unit": "px"
+                                    }
+                                },
+                                "letter-spacing": {
+                                    "$$type": "size",
+                                    "value": {
+                                        "size": 1,
+                                        "unit": "px"
+                                    }
+                                },
+                                "word-spacing": {
+                                    "$$type": "size",
+                                    "value": {
+                                        "size": 1,
+                                        "unit": "px"
+                                    }
+                                },
+                                "column-count": {
+                                    "$$type": "number",
+                                    "value": 1
+                                },
+                                "column-gap": {
+                                    "$$type": "size",
+                                    "value": {
+                                        "size": 12,
+                                        "unit": "px"
+                                    }
+                                },
+                                "text-decoration": {
+                                    "$$type": "string",
+                                    "value": "underline"
+                                },
+                                "text-transform": {
+                                    "$$type": "string",
+                                    "value": "uppercase"
+                                },
+                                "direction": {
+                                    "$$type": "string",
+                                    "value": "ltr"
+                                },
+                                "font-style": {
+                                    "$$type": "string",
+                                    "value": "italic"
+                                },
+                                "stroke": {
+                                    "$$type": "stroke",
+                                    "value": {
+                                        "color": {
+                                            "$$type": "color",
+                                            "value": "#b27575"
+                                        },
+                                        "width": {
+                                            "$$type": "size",
+                                            "value": {
+                                                "unit": "px",
+                                                "size": 1
+                                            }
+                                        }
+                                    }
+                                },
+                                "background": {
+                                    "$$type": "background",
+                                    "value": {
+                                        "background-overlay": {
+                                            "$$type": "background-overlay",
+                                            "value": [
+                                                {
+                                                    "$$type": "background-gradient-overlay",
+                                                    "value": {
+                                                        "type": {
+                                                            "$$type": "string",
+                                                            "value": "linear"
+                                                        },
+                                                        "angle": {
+                                                            "$$type": "number",
+                                                            "value": 180
+                                                        },
+                                                        "stops": {
+                                                            "$$type": "gradient-color-stop",
+                                                            "value": [
+                                                                {
+                                                                    "$$type": "color-stop",
+                                                                    "value": {
+                                                                        "color": {
+                                                                            "$$type": "color",
+                                                                            "value": "rgb(0,0,0)"
+                                                                        },
+                                                                        "offset": {
+                                                                            "$$type": "number",
+                                                                            "value": 0
+                                                                        }
+                                                                    }
+                                                                },
+                                                                {
+                                                                    "$$type": "color-stop",
+                                                                    "value": {
+                                                                        "color": {
+                                                                            "$$type": "color",
+                                                                            "value": "rgb(255,255,255)"
+                                                                        },
+                                                                        "offset": {
+                                                                            "$$type": "number",
+                                                                            "value": 100
+                                                                        }
+                                                                    }
+                                                                }
+                                                            ]
+                                                        }
+                                                    }
+                                                }
+                                            ]
+                                        },
+                                        "color": {
+                                            "$$type": "color",
+                                            "value": "#ff6464"
+                                        },
+                                        "clip": {
+                                            "$$type": "string",
+                                            "value": "text"
+                                        }
+                                    }
+                                },
+                                "border-radius": {
+                                    "$$type": "border-radius",
+                                    "value": {
+                                        "start-start": {
+                                            "$$type": "size",
+                                            "value": {
+                                                "size": 15,
+                                                "unit": "px"
+                                            }
+                                        },
+                                        "start-end": {
+                                            "$$type": "size",
+                                            "value": {
+                                                "size": 14,
+                                                "unit": "rem"
+                                            }
+                                        },
+                                        "end-start": {
+                                            "$$type": "size",
+                                            "value": {
+                                                "size": 15,
+                                                "unit": "px"
+                                            }
+                                        },
+                                        "end-end": {
+                                            "$$type": "size",
+                                            "value": {
+                                                "size": 9,
+                                                "unit": "vw"
+                                            }
+                                        }
+                                    }
+                                },
+                                "border-width": {
+                                    "$$type": "size",
+                                    "value": {
+                                        "size": 1,
+                                        "unit": "px"
+                                    }
+                                },
+                                "border-color": {
+                                    "$$type": "color",
+                                    "value": "#f45a5a"
+                                },
+                                "border-style": {
+                                    "$$type": "string",
+                                    "value": "double"
+                                },
+                                "mix-blend-mode": {
+                                    "$$type": "string",
+                                    "value": "multiply"
+                                },
+                                "opacity": {
+                                    "$$type": "size",
+                                    "value": {
+                                        "size": 50,
+                                        "unit": "%"
+                                    }
+                                },
+                                "box-shadow": {
+                                    "$$type": "box-shadow",
+                                    "value": [
+                                        {
+                                            "$$type": "shadow",
+                                            "value": {
+                                                "hOffset": {
+                                                    "$$type": "size",
+                                                    "value": {
+                                                        "unit": "px",
+                                                        "size": 0
+                                                    }
+                                                },
+                                                "vOffset": {
+                                                    "$$type": "size",
+                                                    "value": {
+                                                        "unit": "px",
+                                                        "size": 0
+                                                    }
+                                                },
+                                                "blur": {
+                                                    "$$type": "size",
+                                                    "value": {
+                                                        "unit": "px",
+                                                        "size": 10
+                                                    }
+                                                },
+                                                "spread": {
+                                                    "$$type": "size",
+                                                    "value": {
+                                                        "unit": "px",
+                                                        "size": 0
+                                                    }
+                                                },
+                                                "color": {
+                                                    "$$type": "color",
+                                                    "value": "rgba(0, 0, 0, 1)"
+                                                },
+                                                "position": null
+                                            }
+                                        },
+                                        {
+                                            "$$type": "shadow",
+                                            "value": {
+                                                "hOffset": {
+                                                    "$$type": "size",
+                                                    "value": {
+                                                        "unit": "px",
+                                                        "size": 0
+                                                    }
+                                                },
+                                                "vOffset": {
+                                                    "$$type": "size",
+                                                    "value": {
+                                                        "unit": "px",
+                                                        "size": 0
+                                                    }
+                                                },
+                                                "blur": {
+                                                    "$$type": "size",
+                                                    "value": {
+                                                        "unit": "px",
+                                                        "size": 10
+                                                    }
+                                                },
+                                                "spread": {
+                                                    "$$type": "size",
+                                                    "value": {
+                                                        "unit": "px",
+                                                        "size": 0
+                                                    }
+                                                },
+                                                "color": {
+                                                    "$$type": "color",
+                                                    "value": "rgba(42, 45, 57, 1)"
+                                                },
+                                                "position": null
+                                            }
+                                        }
+                                    ]
+                                },
+                                "transform": {
+                                    "$$type": "transform",
+                                    "value": {
+                                        "transform-functions": {
+                                            "$$type": "transform-functions",
+                                            "value": [
+                                                {
+                                                    "$$type": "transform-rotate",
+                                                    "value": {
+                                                        "x": {
+                                                            "$$type": "size",
+                                                            "value": {
+                                                                "size": -1,
+                                                                "unit": "grad"
+                                                            }
+                                                        },
+                                                        "y": {
+                                                            "$$type": "size",
+                                                            "value": {
+                                                                "size": 2,
+                                                                "unit": "deg"
+                                                            }
+                                                        },
+                                                        "z": {
+                                                            "$$type": "size",
+                                                            "value": {
+                                                                "size": 0,
+                                                                "unit": "turn"
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                },
+                                "transition": {
+                                    "$$type": "transition",
+                                    "value": [
+                                        {
+                                            "$$type": "selection-size",
+                                            "value": {
+                                                "selection": {
+                                                    "$$type": "key-value",
+                                                    "value": {
+                                                        "key": {
+                                                            "value": "All properties",
+                                                            "$$type": "string"
+                                                        },
+                                                        "value": {
+                                                            "value": "all",
+                                                            "$$type": "string"
+                                                        }
+                                                    }
+                                                },
+                                                "size": {
+                                                    "$$type": "size",
+                                                    "value": {
+                                                        "size": 200,
+                                                        "unit": "ms"
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    ]
+                                },
+                                "filter": {
+                                    "$$type": "filter",
+                                    "value": [
+                                        {
+                                            "$$type": "css-filter-func",
+                                            "value": {
+                                                "func": {
+                                                    "$$type": "string",
+                                                    "value": "blur"
+                                                },
+                                                "args": {
+                                                    "$$type": "blur",
+                                                    "value": {
+                                                        "size": {
+                                                            "$$type": "size",
+                                                            "value": {
+                                                                "size": 0,
+                                                                "unit": "px"
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        },
+                                        {
+                                            "$$type": "css-filter-func",
+                                            "value": {
+                                                "func": {
+                                                    "$$type": "string",
+                                                    "value": "brightness"
+                                                },
+                                                "args": {
+                                                    "$$type": "intensity",
+                                                    "value": {
+                                                        "size": {
+                                                            "$$type": "size",
+                                                            "value": {
+                                                                "size": 5,
+                                                                "unit": "%"
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        },
+                                        {
+                                            "$$type": "css-filter-func",
+                                            "value": {
+                                                "func": {
+                                                    "$$type": "string",
+                                                    "value": "contrast"
+                                                },
+                                                "args": {
+                                                    "$$type": "intensity",
+                                                    "value": {
+                                                        "size": {
+                                                            "$$type": "size",
+                                                            "value": {
+                                                                "size": 5,
+                                                                "unit": "%"
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        },
+                                        {
+                                            "$$type": "css-filter-func",
+                                            "value": {
+                                                "func": {
+                                                    "$$type": "string",
+                                                    "value": "saturate"
+                                                },
+                                                "args": {
+                                                    "$$type": "intensity",
+                                                    "value": {
+                                                        "size": {
+                                                            "$$type": "size",
+                                                            "value": {
+                                                                "size": 100,
+                                                                "unit": "%"
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        },
+                                        {
+                                            "$$type": "css-filter-func",
+                                            "value": {
+                                                "func": {
+                                                    "$$type": "string",
+                                                    "value": "hue-rotate"
+                                                },
+                                                "args": {
+                                                    "$$type": "hue-rotate",
+                                                    "value": {
+                                                        "size": {
+                                                            "$$type": "size",
+                                                            "value": {
+                                                                "size": 5,
+                                                                "unit": "deg"
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        },
+                                        {
+                                            "$$type": "css-filter-func",
+                                            "value": {
+                                                "func": {
+                                                    "$$type": "string",
+                                                    "value": "grayscale"
+                                                },
+                                                "args": {
+                                                    "$$type": "color-tone",
+                                                    "value": {
+                                                        "size": {
+                                                            "$$type": "size",
+                                                            "value": {
+                                                                "size": 5,
+                                                                "unit": "%"
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        },
+                                        {
+                                            "$$type": "css-filter-func",
+                                            "value": {
+                                                "func": {
+                                                    "$$type": "string",
+                                                    "value": "invert"
+                                                },
+                                                "args": {
+                                                    "$$type": "color-tone",
+                                                    "value": {
+                                                        "size": {
+                                                            "$$type": "size",
+                                                            "value": {
+                                                                "size": 8,
+                                                                "unit": "%"
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        },
+                                        {
+                                            "$$type": "css-filter-func",
+                                            "value": {
+                                                "func": {
+                                                    "$$type": "string",
+                                                    "value": "sepia"
+                                                },
+                                                "args": {
+                                                    "$$type": "color-tone",
+                                                    "value": {
+                                                        "size": {
+                                                            "$$type": "size",
+                                                            "value": {
+                                                                "size": 85,
+                                                                "unit": "%"
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        },
+                                        {
+                                            "$$type": "css-filter-func",
+                                            "value": {
+                                                "func": {
+                                                    "$$type": "string",
+                                                    "value": "drop-shadow"
+                                                },
+                                                "args": {
+                                                    "$$type": "drop-shadow",
+                                                    "value": {
+                                                        "blur": {
+                                                            "$$type": "size",
+                                                            "value": {
+                                                                "size": 10,
+                                                                "unit": "px"
+                                                            }
+                                                        },
+                                                        "xAxis": {
+                                                            "$$type": "size",
+                                                            "value": {
+                                                                "size": 5,
+                                                                "unit": "em"
+                                                            }
+                                                        },
+                                                        "yAxis": {
+                                                            "$$type": "size",
+                                                            "value": {
+                                                                "size": 0,
+                                                                "unit": "px"
+                                                            }
+                                                        },
+                                                        "color": {
+                                                            "$$type": "color",
+                                                            "value": "rgba(197, 32, 32, 1)"
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    ]
+                                }
+                            },
+                            "custom_css": {
+                                "raw": "Y3Vyc29yOiBkZWZhdWx0Ow=="
+                            }
+                        }
+                    ]
+                }
+            },
+            "htmlCache": ""
+        }
+    ]
+}
